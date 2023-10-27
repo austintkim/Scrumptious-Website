@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Scrumptious recipes
+{% endblock title %}
+
+{% block content %}
+<header>
+    <nav class="nav-items-grid" class="hi_user">
+        <a href="{% url 'recipe_list' %}">Main page</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'my_recipe_list' %}">My recipes</a>
+            <a href="{% url 'create_recipe' %}">Create a recipe</a>
+            <a id="logout-position" href="{% url 'logout' %}">Logout</a>
+            <div id="user-position">Hello, {{ user.username }}</div>
+        {% else %}
+            <a href="{% url 'signup' %}">Sign up</a>
+            <a href="{% url 'login' %}">Login</a>
+        {% endif %}
+
+    </nav>
+</header>
+<main>
+    <div>
+        <h1 class = "title-format">Scrumptious Recipes</h1>
+        <h2> <span class = "title-description-format">All the food that's fit to eat</span></h2>
+        <div class="content-layout">
+            {% for recipe in recipe_list %}
+            <a href="{% url 'show_recipe' recipe.id %}">
+                <div class="recipe-layout">
+                    <h3 class = "title-format center-text">
+                        {{ recipe.title }}
+                    </h3>
+                    <p class = "center-text created-on-format">{{ recipe.created_on|date:"n/j/o"}}</p>
+                    <p class = "center-text created-on-format">{{ recipe.created_on|date:"P"}}</p>
+                    <div>
+                            <div class="image-wrapper">
+                                <img class="list-image" src='{{ recipe.picture }}' style = "border-color: {% cycle 'black' 'black' 'gray'%}"
+                                alt = '{{ recipe.description }}'>
+                            </div>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock content %}

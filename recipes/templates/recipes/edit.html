@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Scrumptious recipes
+{% endblock title %}
+
+{% block content %}
+<header>
+    <nav class="nav-items-grid">
+      <a href="{% url 'show_recipe' recipe_object.id %}">Back</a>
+    </nav>
+  </header>
+  <main>
+    <h1 class="title">Edit this recipe</h1>
+    <form method="post">
+      {% csrf_token %}
+      {{ recipe_form.as_p }}
+      <button class="button is-primary">Save</button>
+    </form>
+  </main>
+{% endblock content %}
+
